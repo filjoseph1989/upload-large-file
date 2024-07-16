@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
-class FileUploadService
+use App\Services\Contracts\FileUploadServiceInterface;
+use Illuminate\Http\UploadedFile;
+
+class FileUploadService implements FileUploadServiceInterface
 {
-    public function uploadChunk($file, $chunkIndex, $totalChunks, $originalFilename)
+    public function uploadChunk(UploadedFile $file, int $chunkIndex, int $totalChunks, string $originalFilename): array
     {
         // Generate a unique temporary filename
         $tempFilename = 'upload_' . md5($originalFilename) . '.tmp';
