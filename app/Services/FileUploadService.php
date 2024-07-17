@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Services\Contracts\FileUploadServiceInterface;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class FileUploadService implements FileUploadServiceInterface
 {
@@ -22,30 +22,41 @@ class FileUploadService implements FileUploadServiceInterface
 
         if (count($uploadedChunks) == $totalChunks) {
             // Ensure the uploads directory exists
-            $uploadsDirectory = Storage::disk('local')->path('uploads');
-            if (!is_dir($uploadsDirectory)) {
-                mkdir($uploadsDirectory, 0755, true);
+            $uploadsDirectory = 'uploads';
+            if (!Storage::disk('local')->exists($uploadsDirectory)) {
+                Storage::disk('local')->makeDirectory($uploadsDirectory);
             }
 
             // Combine all chunks to create the final file
             $finalFilePath = $uploadsDirectory . '/' . $originalFilename;
-            $finalFile = fopen($finalFilePath, 'wb');
+            $finalFile = Storage::disk('local')->path($finalFilePath);
+
+            $fileHandle = fopen($finalFile, 'wb');
 
             for ($i = 0; $i < $totalChunks; $i++) {
-                $chunkPath = $chunksPath . '/' . $tempFilename . '.' . $i;
+                $chunkPath = Storage::disk('local')->path('chunks/' . $tempFilename . '.' . $i);
                 $chunk = fopen($chunkPath, 'rb');
                 while ($buffer = fread($chunk, 4096)) {
-                    fwrite($finalFile, $buffer);
+                    fwrite($fileHandle, $buffer);
                 }
                 fclose($chunk);
 
                 // Delete the chunk after appending it to the final file
-                unlink($chunkPath);
+                Storage::disk('local')->delete('chunks/' . $tempFilename . '.' . $i);
             }
 
-            fclose($finalFile);
+            fclose($fileHandle);
+
+            // Get the URL of the uploaded file
+            $videoUrl = Storage::disk('local')->url($finalFilePath);
+            $videoUrl = str_replace("/storage/", '', $videoUrl);
+
+            return [
+                'status' => 'success',
+                'url' => config('app.url') . '/' . $videoUrl,
+            ];
         }
 
-        return ['status' => 'success'];
+        return ['status' => 'chunk uploaded'];
     }
 }
