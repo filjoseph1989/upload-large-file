@@ -78,6 +78,14 @@ sudo cp /etc/php/8.1/fpm/pool.d/www.conf /etc/php/8.1/fpm/pool.d/laravel.conf
 ```
 
 ## Step 9: Laravel Application Setup
+Clone this repository
+```sh
+git clone https://github.com/filjoseph1989/upload-large-file.git
+```
+Install packages
+```sh
+composer install
+```
 Generate application key:
 ```sh
 php artisan key:generate
