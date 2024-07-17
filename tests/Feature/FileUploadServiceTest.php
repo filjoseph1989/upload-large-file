@@ -27,7 +27,10 @@ it('uploads a chunk correctly', function () {
     Storage::disk('local')->assertExists('uploads/video.mp4');
 
     // Assert response
-    expect($response)->toBe(['status' => 'success']);
+    expect($response)->toBe([
+        'status' => 'success',
+        'url' => config('app.url').'/uploads/video.mp4',
+    ]);
 });
 
 it('combines multiple chunks correctly', function () {
@@ -50,5 +53,8 @@ it('combines multiple chunks correctly', function () {
     expect($finalContents)->toBe(str_repeat('A', $chunkSize) . str_repeat('B', $chunkSize));
 
     // Assert response
-    expect($response)->toBe(['status' => 'success']);
+    expect($response)->toBe([
+        'status' => 'success',
+        'url' => config('app.url') . '/uploads/video.mp4',
+    ]);
 });
