@@ -141,3 +141,11 @@ sudo ufw enable
 ```
 
 Following these steps will help you set up Apache2, PHP, Laravel, and PostgreSQL on your server effectively. Ensure you replace placeholders like `yourdomain.com`, `your_username`, `your_password`, and `your_database_name` with your actual domain, username, password, and database name.
+
+---
+
+## Running the test
+
+```
+php artisan test
+```
