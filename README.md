@@ -98,6 +98,10 @@ Seed the database:
 ```sh
 php artisan db:seed
 ```
+Create symbolic link:
+```sh
+php artisan app:storage-uploads-link
+```
 
 ## Step 10: Set Permissions for Laravel Storage
 ```sh
