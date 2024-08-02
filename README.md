@@ -1,21 +1,31 @@
-# Comprehensive Guide to Setting Up Apache2, PHP, Laravel, and PostgreSQL
+# Using example
 
-## Step 1: Update Your System
+Open the file
+
+```bash
+example/dist/readme.md
+```
+
+for using the UI
+
+# Guide to Setting Up Apache2, PHP, Laravel, and PostgreSQL
+
+### Step 1: Update Your System
 ```sh
 sudo apt update
 ```
 
-## Step 2: Install Apache2
+### Step 2: Install Apache2
 ```sh
 sudo apt install apache2
 ```
 
-## Step 3: Configure Firewall to Allow HTTP Traffic
+### Step 3: Configure Firewall to Allow HTTP Traffic
 ```sh
 sudo ufw allow http
 ```
 
-## Step 4: Manage Apache2 Service
+### Step 4: Manage Apache2 Service
 Check the status of Apache2:
 ```sh
 sudo systemctl status apache2
@@ -33,7 +43,7 @@ Restart Apache2:
 sudo systemctl restart apache2
 ```
 
-## Step 5: Configure Apache2 for Your Domain
+### Step 5: Configure Apache2 for Your Domain
 Create a new configuration file:
 ```sh
 sudo nano /etc/apache2/sites-available/yourdomain.conf
@@ -61,23 +71,23 @@ sudo a2ensite yourdomain.conf
 sudo systemctl restart apache2
 ```
 
-## Step 6: Install PHP and Required Extensions
+### Step 6: Install PHP and Required Extensions
 ```sh
 sudo apt install -y git curl unzip php-fpm php-mysql php-mbstring php-gd php-json php-curl php-zip php-bcmath php-xml php-intl
 ```
 
-## Step 7: Install Composer
+### Step 7: Install Composer
 ```sh
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 ```
 
-## Step 8: Configure PHP-FPM for Laravel
+### Step 8: Configure PHP-FPM for Laravel
 ```sh
 sudo cp /etc/php/8.1/fpm/pool.d/www.conf /etc/php/8.1/fpm/pool.d/laravel.conf
 ```
 
-## Step 9: Laravel Application Setup
+### Step 9: Laravel Application Setup
 Clone this repository
 ```sh
 git clone https://github.com/filjoseph1989/upload-large-file.git
@@ -103,13 +113,13 @@ Create symbolic link:
 php artisan app:storage-uploads-link
 ```
 
-## Step 10: Set Permissions for Laravel Storage
+### Step 10: Set Permissions for Laravel Storage
 ```sh
 sudo chown -R www-data:www-data /path/to/your/laravel/storage
 sudo chmod -R 775 /path/to/your/laravel/storage
 ```
 
-## Step 11: Create and Configure .env File
+### Step 11: Create and Configure .env File
 Create a `.env` file in your Laravel project with the following content:
 ```env
 DB_CONNECTION=pgsql
@@ -120,12 +130,12 @@ DB_USERNAME=laravel
 DB_PASSWORD=password
 ```
 
-## Step 12: Install PostgreSQL
+### Step 12: Install PostgreSQL
 ```sh
 sudo apt install postgresql postgresql-contrib
 ```
 
-## Step 13: Configure PostgreSQL
+### Step 13: Configure PostgreSQL
 Switch to the postgres user:
 ```sh
 sudo -u postgres psql
@@ -142,12 +152,12 @@ Exit PostgreSQL:
 \q
 ```
 
-## Step 14: Enable Apache2 Rewrite Module
+### Step 14: Enable Apache2 Rewrite Module
 ```sh
 sudo a2enmod rewrite
 ```
 
-## Step 15: Enable Firewall
+### Step 15: Enable Firewall
 ```sh
 sudo ufw enable
 ```
@@ -156,7 +166,7 @@ Following these steps will help you set up Apache2, PHP, Laravel, and PostgreSQL
 
 ---
 
-## Running the test
+### Running the test
 
 ```
 php artisan test
